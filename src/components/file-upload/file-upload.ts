@@ -4,7 +4,7 @@ import Component from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 
 import FileDropPlugin from '../../directives/file-drop/file-drop';
-import FilePlugin, { MFile, MFileStatus, MFileRejectionCause } from '../../utils/file/file';
+import FilePlugin, { MFile, MFileRejectionCause, MFileStatus } from '../../utils/file/file';
 import { Messages } from '../../utils/i18n/i18n';
 import { ModulVue } from '../../utils/vue/vue';
 import ButtonPlugin from '../button/button';
@@ -23,6 +23,7 @@ const COMPLETED_FILES_VISUAL_HINT_DELAY: number = 1000;
 
 interface MFileExt extends MFile {
     completeHinted: boolean;
+    rejectionShown: boolean;
 }
 
 let filesizeSymbols: { [name: string]: string } | undefined = undefined;
@@ -60,6 +61,7 @@ export class MFileUpload extends ModulVue {
     };
 
     private title: string = this.$i18n.translate('m-file-upload:header-title');
+    private lastRejectedFiles: MFileExt[] = [];
 
     private created(): void {
         this.$file.setValidationOptions({
@@ -80,6 +82,17 @@ export class MFileUpload extends ModulVue {
         }
     }
 
+    @Watch('rejectedFiles')
+    private onFilesRejected(): void {
+        this.lastRejectedFiles = [];
+        for (const f of this.rejectedFiles) {
+            if (!f.rejectionShown) {
+                this.lastRejectedFiles.push(f);
+                f.rejectionShown = true;
+            }
+        }
+    }
+
     @Watch('freshlyCompletedFiles')
     private onFreshlyCompletedFilesChanged(): void {
         if (this.freshlyCompletedFiles.length > 0) {
@@ -92,9 +105,7 @@ export class MFileUpload extends ModulVue {
     }
 
     private onMessageClose(): void {
-        for (const f of this.rejectedFiles) {
-            this.$file.remove(f.uid);
-        }
+        this.lastRejectedFiles = [];
     }
 
     private onAddClick(): void {
@@ -175,15 +186,15 @@ export class MFileUpload extends ModulVue {
     }
 
     private get extensionsRejectedFiles(): MFileExt[] {
-        return this.allFiles.filter(f => f.status === MFileStatus.REJECTED && f.rejection === MFileRejectionCause.FILE_TYPE);
+        return this.lastRejectedFiles.filter(f => f.rejection === MFileRejectionCause.FILE_TYPE);
     }
 
     private get sizeRejectedFiles(): MFileExt[] {
-        return this.allFiles.filter(f => f.status === MFileStatus.REJECTED && f.rejection === MFileRejectionCause.FILE_SIZE);
+        return this.lastRejectedFiles.filter(f => f.rejection === MFileRejectionCause.FILE_SIZE);
     }
 
     private get maxFilesRejectedFiles(): MFileExt[] {
-        return this.allFiles.filter(f => f.status === MFileStatus.REJECTED && f.rejection === MFileRejectionCause.MAX_FILES);
+        return this.lastRejectedFiles.filter(f => f.rejection === MFileRejectionCause.MAX_FILES);
     }
 
     private get allFiles(): MFileExt[] {
@@ -199,7 +210,7 @@ export class MFileUpload extends ModulVue {
     }
 
     private get hasRejectedFiles(): boolean {
-        return this.rejectedFiles.length !== 0;
+        return this.lastRejectedFiles.length !== 0;
     }
 
     private get hasExtensionsRejectedFiles(): boolean {
