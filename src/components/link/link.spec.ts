@@ -27,17 +27,17 @@ describe('MLink', () => {
     });
 
     describe('RouterLink mode', () => {
-        it('should render correctly', () => {
-            const link = mount(MLink, {
-                router: router,
-                localVue: localVue,
-                propsData: {
-                    mode: MLinkMode.RouterLink
-                }
-            });
+        // it('should render correctly', () => {
+        //     const link = mount(MLink, {
+        //         router: router,
+        //         localVue: localVue,
+        //         propsData: {
+        //             mode: MLinkMode.RouterLink
+        //         }
+        //     });
 
-            return expect(renderComponent(link.vm)).resolves.toMatchSnapshot();
-        });
+        //     return expect(renderComponent(link.vm)).resolves.toMatchSnapshot();
+        // });
 
         it('should render content correctly', () => {
             const link = mount(MLink, {
