@@ -53,6 +53,10 @@ export class MDatefields extends ModulVue {
         this.setInternal(this.value);
     }
 
+    private noCoverage(): void {
+        console.log('allooo');
+    }
+
     @Watch('value')
     private setInternal(value: moment.Moment | Date | undefined): void {
         let valueYear = !value ? undefined : value instanceof Date ? value.getFullYear() : value.year();
