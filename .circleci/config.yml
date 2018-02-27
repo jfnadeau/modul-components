@@ -45,7 +45,9 @@ jobs:
             JEST_HTML_REPORTER_OUTPUT_PATH: "reports/junit/js-test-results.html"
             JEST_HTML_REPORTER_INCLUDE_FAILURE_MSG: true
 
-
+      - run:
+          name: Codecov
+          command: bash <(curl -s https://codecov.io/bash)
 
       - store_test_results:
           path: reports/junit
