@@ -48,8 +48,6 @@ exports[`MLink RouterLink mode should pass route values to router-link using url
 
 exports[`MLink RouterLink mode should render content correctly 1`] = `<a href="/" class="m-link router-link-active"> <span class="m-link__text">Link</span> </a>`;
 
-exports[`MLink RouterLink mode should render correctly 1`] = `<a href="/" class="m-link router-link-active"> <span class="m-link__text"></span> </a>`;
-
 exports[`MLink RouterLink mode should render correctly all icon style: left 1`] = `
 <a href="/" class="m-link m--has-left-icon">
     <svg aria-hidden="true" width="12px" height="12px" class="m-icon m-link__icon">
