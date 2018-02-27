@@ -1,8 +1,7 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { createLocalVue } from '@vue/test-utils';
 import Vue, { VueConstructor } from 'vue';
 
-import { renderComponent } from '../../../tests/helpers/render';
-import ProgressPlugin, { MProgress } from './progress';
+import ProgressPlugin from './progress';
 
 describe('MProgress', () => {
     let localVue: VueConstructor<Vue>;
@@ -11,7 +10,7 @@ describe('MProgress', () => {
         localVue = createLocalVue();
         localVue.use(ProgressPlugin);
     });
-
+/*
     describe('bar mode', () => {
         it('should render correctly', () => {
             const pgr = mount(MProgress, {
@@ -44,5 +43,5 @@ describe('MProgress', () => {
 
             return expect(renderComponent(pgr.vm)).resolves.toMatchSnapshot();
         });
-    });
+    }); */
 });

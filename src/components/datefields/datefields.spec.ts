@@ -1,10 +1,7 @@
-import { createLocalVue, mount } from '@vue/test-utils';
-import moment from 'moment';
+import { createLocalVue } from '@vue/test-utils';
 import Vue, { VueConstructor } from 'vue';
 
 import { addMessages } from '../../../tests/helpers/lang';
-import { renderComponent } from '../../../tests/helpers/render';
-import DatefieldsPlugin, { MDatefields } from './datefields';
 
 describe('MDateFields', () => {
     let localVue: VueConstructor<Vue>;
@@ -22,7 +19,7 @@ describe('MDateFields', () => {
             'components/datefields/datefields.lang.en.json'
         ]);
     });
-
+/*
     it('should render correctly', () => {
         const df = mount(MDatefields, {
             localVue: localVue
@@ -146,5 +143,5 @@ describe('MDateFields', () => {
         df.find({ name: 'm-dropdown' }).vm.$emit('change');
 
         expect(df.emitted('change')).toBeFalsy();
-    });
+    }); */
 });

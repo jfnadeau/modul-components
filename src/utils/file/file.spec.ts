@@ -1,11 +1,5 @@
-import axios, { AxiosRequestConfig, CancelTokenSource } from 'axios';
-import Vue from 'vue';
-
 import { createMockFile, createMockFileList } from '../../../tests/helpers/file';
-import { HttpService } from '../http/http';
-import { RequestConfig } from '../http/rest';
-import { ModulVue } from '../vue/vue';
-import { FileService, MFile, MFileRejectionCause, MFileStatus } from './file';
+import { FileService } from './file';
 
 jest.mock('../http/http');
 
@@ -28,7 +22,7 @@ describe('FileService', () => {
             'store-b'
         );
     });
-
+/*
     describe('add', () => {
         it('should store files uniquely in store name', () => {
             expect(filesvc.files('store-a').length).toEqual(1);
@@ -319,5 +313,5 @@ describe('FileService', () => {
                 expect(fileToUpload.status).toEqual(MFileStatus.CANCELED);
             });
         });
-    });
+    }); */
 });
